@@ -9,12 +9,12 @@ window.addEventListener('DOMContentLoaded', () => {
 		const pass = document.getElementById('loginPass').value;
 		var passhash = CryptoJS.MD5(pass).toString();
 		window.electronAPI.setCookie({
-		  url: 'https://localhost',
+		  url: 'https://206.189.8.155',
 		  name: 'email',
 		  value: email
 		})
 		window.electronAPI.setCookie({
-		  url: 'https://localhost',
+		  url: 'https://206.189.8.155',
 		  name: 'pass',
 		  value: passhash
 		})
@@ -39,7 +39,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		const hash = CryptoJS.MD5(password).toString();
 
 
-		fetch("http://localhost:3000/students/register", {
+		fetch("http://206.189.8.155:3000/students/register", {
 				method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,17 +57,17 @@ window.addEventListener('DOMContentLoaded', () => {
 				.then(data => {
 					console.log(data)
 					window.electronAPI.setCookie({
-					  url: 'https://localhost',
+					  url: 'https://206.189.8.155',
 					  name: 'token',
 					  value: data.token
 					})
 					window.electronAPI.setCookie({
-					  url: 'https://localhost',
+					  url: 'https://206.189.8.155',
 					  name: 'email',
 					  value: email
 					})
 					window.electronAPI.setCookie({
-					  url: 'https://localhost',
+					  url: 'https://206.189.8.155',
 					  name: 'pass',
 					  value: hash
 					})
@@ -88,13 +88,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		for(let i in cookies) {
 			const cookie = cookies[i];
-			if(cookie.name == "email" && cookie.domain == 'localhost') {
+			if(cookie.name == "email" && cookie.domain == '206.189.8.155') {
 				email = cookie.value;
 			}
-			if(cookie.name == "pass" && cookie.domain == 'localhost') {
+			if(cookie.name == "pass" && cookie.domain == '206.189.8.155') {
 				pass = cookie.value;
 			}
-			if(cookie.name == "token" && cookie.domain == 'localhost') {
+			if(cookie.name == "token" && cookie.domain == '206.189.8.155') {
 				token = cookie.value;
 			}
 		}
@@ -107,7 +107,7 @@ window.addEventListener('DOMContentLoaded', () => {
 })
 function login(email, pass) {
 
-		fetch("http://localhost:3000/students/login", {
+		fetch("http://206.189.8.155:3000/students/login", {
 				method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -121,7 +121,7 @@ function login(email, pass) {
 				.then(data => {
 					console.log(data)
 					window.electronAPI.setCookie({
-					  url: 'https://localhost',
+					  url: 'https://206.189.8.155',
 					  name: 'token',
 					  value: data.token
 					})

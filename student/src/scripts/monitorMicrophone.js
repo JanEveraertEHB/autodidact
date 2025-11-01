@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const token = c.filter((e) => e.name == "token")[0].value
             
             if(average > 1.5) {
-    	        fetch('http://localhost:3000/actions/mic-level', {
+    	        fetch('http://206.189.8.155:3000/actions/mic-level', {
     	            method: 'POST',
     	            headers: { 
     	            	'Content-Type': 'application/json' ,

@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   const c = await window.electronAPI.getCookies();
   if(c.filter((e) => e.name == "token").length > 0) {
     const token = c.filter((e) => e.name == "token")[0].value
-    fetch('http://localhost:3000/actions/request', {
+    fetch('http://206.189.8.155:3000/actions/request', {
         headers: { 
           'Content-Type': 'application/json' ,
           "Authorization": token
@@ -69,7 +69,7 @@ async function sendToAPI(action, active) {
   const c = await window.electronAPI.getCookies();
   if(c.filter((e) => e.name == "token").length > 0) {
     const token = c.filter((e) => e.name == "token")[0].value
-    fetch('http://localhost:3000/actions/request', {
+    fetch('http://206.189.8.155:3000/actions/request', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json' ,

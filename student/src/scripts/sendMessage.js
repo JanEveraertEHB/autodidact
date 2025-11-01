@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const c = await window.electronAPI.getCookies();
         const token = c.filter((e) => e.name == "token")[0].value
         const message = messageInput.value.trim();
-        fetch("http://localhost:3000/actions/questions", {
+        fetch("http://206.189.8.155:3000/actions/questions", {
         	method: "POST",
             headers: {
               "Content-Type": "application/json",

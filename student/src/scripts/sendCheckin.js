@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const c = await window.electronAPI.getCookies();
         const token = c.filter((e) => e.name == "token")[0].value
 
-        fetch("http://localhost:3000/actions/checkin", {
+        fetch("http://206.189.8.155:3000/actions/checkin", {
         	method: "POST",
             headers: {
               "Content-Type": "application/json",
