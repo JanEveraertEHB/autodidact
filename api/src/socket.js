@@ -5,11 +5,11 @@ function init(server) {
   const { Server } = require('socket.io');
   io = new Server(server, {
     cors: {
-      origins: ["*"],
+      origin: "*",
       methods: ["GET", "POST"],
-      transports: ['websocket', 'polling'],
       upgrade: false
-    }
+    },
+    transports: ['websocket', 'polling']
   });
 
   io.on('connection', (socket) => {
