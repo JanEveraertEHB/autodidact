@@ -5,7 +5,7 @@ function init(server) {
   const { Server } = require('socket.io');
   io = new Server(server, {
     cors: {
-      origin: "http://206.189.8.15:8080",
+      origins: ["*"],
       methods: ["GET", "POST"],
       transports: ['websocket', 'polling'],
       upgrade: false
