@@ -1,0 +1,168 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.top-bar {
+    background: #eee;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-icon {
+    padding: 10px;
+    box-sizing: border-box;
+    height: 100%;
+    background: #A1CF6B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+}
+.username {
+    color: #aaa;
+    font-size: .8rem;
+    line-height: 40px;
+}
+.container {
+    box-sizing: border-box;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin: 0.5rem;
+    border: 1px solid #000;
+}
+.questions {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 600px;
+    overflow-y: scroll;
+}
+.question {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 10px
+}
+.questionHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.questionHeader button {
+    width: 120px;
+    float: right;
+}
+.AI {
+    background: #eee;
+    color: #aaa;
+    padding: 10px;
+    margin-top: 20px;
+    min-height: 200px;
+}
+.requests {
+    margin-top: 20px;
+    padding: 0px 10px;
+    display: flex;
+    width: calc(100% );
+    position: absolute;
+    top: calc(100vh - 180px);
+    flex-direction: row;
+    gap: 20px;
+    justify-content: start;
+}
+button {
+    background: #000;
+    max-height: 50px;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s;
+}
+button:hover {
+    background: #aaa;
+}
+label {
+    font-size: .8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+input[type=email],
+input[type=text],
+input[type=password] {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    max-height: 50px;
+}
+.status-bar {
+    padding: 1rem;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #000;
+    height: 50px;
+    font-size: 0.9rem;
+    color: #4a5568;
+    position: absolute;
+    top: 100%;
+    margin: 0px;
+    margin-top: -50px;
+}
+
+.status-bar.success {
+    background-color: #A1CF6B;
+    color: #fff;
+}
+
+.status-bar.error {
+    background-color: #E87461;
+    color: #fff;
+}
+
+
+a {
+    text-decoration: underline;
+    font-weight: initial;
+    font-size: .8rem;
+    text-transform: uppercase;
+}
+
+.request {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    height: 80px;
+    width: 100px;
+    color: #aaa;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #aaa;
+}
+.request.active {
+    background: #000;
+    color: #fff;
+}

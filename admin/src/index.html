@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html><!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin</title>
+    <link rel="stylesheet" href="main.css">
+  </head>
+  <body>
+
+    <div class="top-bar">
+        <div class="user-icon" id="user">Jan Everaert</div>
+        <button id="checkin">Check in</button>
+    </div>
+
+  	<div class="container">
+  		<div class="questions" id="questions">
+        <!-- <label htmlFor="email">Email</label>
+        <input type="email" placeholder="email" id="email" />
+        <label htmlFor="password">Password</label>
+        <input type="password" placeholder="password" id="password" />
+        <button id="login">Submit</button> -->
+  		</div>
+  		<div class="AI">
+  			this is where the AI tries to answer the question as well
+  		</div>
+  	</div>
+
+    <div class="requests">
+        <a class="request" id="raise_hand">Hand raised <div>0</div></a>
+        <a class="request" id="unclear">Unclear<div>0</div></a>
+        <a class="request" id="show_me">Show<div>0</div></a>
+        <a class="request" id="too_fast">Too fast<div>0</div></a>
+  	</div>
+  	<div id="status-bar" class="status-bar"><div id="status">No</div></div>
+
+
+		<script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+
