@@ -47,8 +47,7 @@ class LoginManager {
           last_name: last_name,
           email: email, 
           password: hash,
-          class: classgroup,
-          uuid: uuidv4()
+          class: classgroup
         })
       })
       .then(r => r.json())

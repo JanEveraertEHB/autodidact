@@ -66,6 +66,7 @@ router.post('/login', (req, res) => {
 router.post('/register', (req, res) => {
   if(req.body) {
     if(checkBodyFields(req.body, ["first_name", "last_name","class", "email", "password"])) {
+      req.body.uuid = uuidv4();
       pg.get()("users").insert(req.body).returning("*").then((data) => {
         console.log(data)
         pg.logAction("register", req.body, data[0].uuid);
