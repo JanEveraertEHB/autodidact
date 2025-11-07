@@ -35,21 +35,24 @@ class LoginManager {
     const email = document.getElementById('registerEmail').value;
     const password = document.getElementById('registerPass').value;
     const hash = CryptoJS.MD5(password).toString();
-
+    console.log("should be removed")
 
     fetch("http://" + window.location.hostname + ":3000/students/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+
         body: JSON.stringify({
           first_name: first_name, 
           last_name: last_name,
           email: email, 
           password: hash,
           class: classgroup
+
+
         })
-        
+
       })
       .then(r => r.json())
       .then(data => {
