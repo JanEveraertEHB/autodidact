@@ -4,6 +4,13 @@ services:
   admin:
     image: crshlab/autodidactadmin:latest
     ports:
+      - 8081:80
+    networks:
+      - backend
+
+  student:
+    image: crshlab/autodidactstudent:latest
+    ports:
       - 8080:80
     networks:
       - backend

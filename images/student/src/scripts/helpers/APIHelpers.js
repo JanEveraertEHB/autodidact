@@ -1,10 +1,10 @@
 import { getCookie, setCookie} from './cookieHelpers.js'
 
-async function sendWithToken(endpoint, body, cb = ()=> {}, err = ()=> {}) {
+async function sendWithToken(endpoint, body, callback = ()=> {}, err = ()=> {}) {
   const c = getCookie("token")
   if(c.length > 0) {
     const token = c;
-    fetch(window.location.protocol + "//" + window.location.hostname + ":3000/" + endpoint, {
+    await fetch(window.location.protocol + "//" + window.location.hostname + ":3000/" + endpoint, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json' ,
@@ -15,7 +15,7 @@ async function sendWithToken(endpoint, body, cb = ()=> {}, err = ()=> {}) {
     })
     .then(r => r.json())
     .then((data) => {
-      cb(data);
+      callback(data);
     })
     .catch((error) => {
       err(error)
