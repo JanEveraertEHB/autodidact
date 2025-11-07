@@ -2,17 +2,31 @@
 services:
 
   admin:
-    build: ./admin
+    build: ./images/admin
     image: crshlab/autodidactadmin:latest
+    ports:
+      - 8081:80
+    networks:
+      - backend
+    volumes:
+      -  ./images/admin/src/:/usr/share/nginx/html/
+    environment:
+      API_ENDPOINT:
+      
+  student:
+    build: ./images/student
+    image: crshlab/autodidactstudent:latest
     ports:
       - 8080:80
     networks:
       - backend
     volumes:
-      -  ./admin/src/:/usr/share/nginx/html/
+      -  ./images/student/src/:/usr/share/nginx/html/
+    environment:
+      API_ENDPOINT: 
       
   api:
-    build: ./api
+    build: ./images/api
     image: crshlab/autodidactapi:latest
     container_name: "api"
     ports:
@@ -23,12 +37,12 @@ services:
       POSTGRES_PASSWORD:
       POSTGRES_HOST: db
     volumes:
-      - ./api/src:/usr/app/src
+      - ./images/api/src:/usr/app/src
     depends_on:
       db:
         condition: service_healthy
     networks:
-      - backend
+      - backend  
 
 
   db:
@@ -38,25 +52,25 @@ services:
     environment:
       POSTGRES_USER:
       POSTGRES_DATABASE:
-      POSTGRES_DB: POSTGRES_DATABASE
+      POSTGRES_DB: "postgres"
       POSTGRES_PASSWORD:
+    volumes:
+      - ./images/_volumes/pg:/var/lib/postgresql/
+    networks:
+      - backend
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d postgres -U admin"]
       interval: 5s
       timeout: 5s
       retries: 5
-    volumes:
-      - ./_volumes/pg:/var/lib/postgresql/
-    networks:
-      - backend
 
 
   # facerec_service:
-  #   build: ./face_recognition
+  #   build: ./images/face_recognition
   #   ports:
   #     - 8081:8080
   #   volumes:
-  #     - ./face_recognition/faces:/root/faces
+  #     - ./images/face_recognition/faces:/root/faces
   #   restart: always
 
   # libretranslate:
@@ -66,7 +80,7 @@ services:
   #     - "5001:5000"
   #   restart: unless-stopped
   #   healthcheck:
-  #     test: ['CMD-SHELL', './venv/bin/python scripts/healthcheck.py']
+  #     test: ['CMD-SHELL', './images/venv/bin/python scripts/healthcheck.py']
   #     interval: 10s
   #     timeout: 4s
   #     retries: 4
@@ -74,19 +88,19 @@ services:
   #   environment:
   #     - LT_LOAD_ONLY=en,nl
   #   volumes:
-  #     - ./libretranslate:/home/libretranslate/.local:rw
+  #     - ./images/libretranslate:/home/libretranslate/.local:rw
   #   networks:
   #     - backend
 
 
-  # ollama: 
-  #   image: ollama/ollama:latest
-  #   ports: 
-  #     - 11434:11434
-  #   volumes: 
-  #     - ./ollama:/root/.ollama
-  #   networks:
-  #     - backend
+  ollama: 
+    image: ollama/ollama:latest
+    ports: 
+      - 11434:11434
+    volumes: 
+      - ./images/ollama:/root/.ollama
+    networks:
+      - backend
 
 networks:
   backend:

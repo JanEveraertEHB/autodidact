@@ -11,8 +11,8 @@ const { checkBodyFields } =require("./helpers/bodyHelpers");
 const { uuidv4 } =require("./helpers/uuidHelpers");
 const pg = require('./db/db.js')
 
-const student_routes = require('./students')
-const action_routes = require('./actions')
+const student_routes = require('./routes/students')
+const action_routes = require('./routes/actions')
 
 const { init } = require('./socket');
 
@@ -28,6 +28,7 @@ app.use('/actions', action_routes);
 app.get('/', (req, res) => {
   res.send("hello world")
 })
+
 
 
 init(server)

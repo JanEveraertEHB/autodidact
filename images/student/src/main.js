@@ -2,6 +2,7 @@ const { app, BrowserWindow } = require('electron/main')
 const { ipcMain, session } = require('electron')
 const path = require('node:path')
 
+
 ipcMain.handle('get-cookies', async () => {
   return await session.defaultSession.cookies.get({})
 })

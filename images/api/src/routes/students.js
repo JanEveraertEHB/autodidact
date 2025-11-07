@@ -1,15 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken');
-const { checkBodyFields } =require("./helpers/bodyHelpers");
-const { uuidv4 } =require("./helpers/uuidHelpers");
+const { checkBodyFields } =require("./../helpers/bodyHelpers");
+const { uuidv4 } =require("./../helpers/uuidHelpers");
+const {decodeToken} = require("./../helpers/authHelpers")
 
-const pg = require('./db/db.js')
+const pg = require('./../db/db.js')
 
-
-
-router.post('/login', (req, res) => {
-  const info = {
+const getInfo = (req) => {
+  return {
     ip: req.ip,
     ips: req.ips,
     remote: req.socket.remoteAddress,
@@ -25,18 +24,25 @@ router.post('/login', (req, res) => {
     } : null,
     sessionId: req.session?.id
   };
-  // const info = {
-  //   system: req.headers["user-agent"],
-  //   lan: req.headers["accept-language"],
-  //   ipv6: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
-  //   ipv4: req.ip,
-  //   ref: req.get('Referer')
-  // }
+}
+
+router.get('/validate', decodeToken, (req, res) => {
+  const info = getInfo(req);
+  if(req.user) {
+    delete req.user.password;
+    pg.logAction("login", info, req.user.uuid); 
+    res.send(req.user);
+  } else {
+    res.status(400).send()
+  }
+})
+router.post('/login', (req, res) => {
+  const info = getInfo(req);
   if(req.body) {
     if(checkBodyFields(req.body, ["email", "password"])) {
-      pg.get()("students").select("*").where(req.body).then((data) => {
+      pg.get()("users").select("*").where(req.body).then((data) => {
         if(data.length > 0) {
-          pg.logAction("login", info, data[0].uuid);
+          pg.logAction("login", info, data[0].uuid); 
           const token = jwt.sign(data[0], 'weaponofmathdestruction');
           res.status(200).send({...data[0], token, message: "success"})
         } else {
@@ -60,7 +66,7 @@ router.post('/login', (req, res) => {
 router.post('/register', (req, res) => {
   if(req.body) {
     if(checkBodyFields(req.body, ["first_name", "last_name","class", "email", "password"])) {
-      pg.get()("students").insert(req.body).returning("*").then((data) => {
+      pg.get()("users").insert(req.body).returning("*").then((data) => {
         console.log(data)
         pg.logAction("register", req.body, data[0].uuid);
 
@@ -81,7 +87,7 @@ router.post('/register', (req, res) => {
 })
 
 router.get('/', (req, res) => {
-  pg.get()("students").select(["uuid", "first_name", "last_name", "class"]).then((data) => {
+  pg.get()("users").select(["uuid", "first_name", "last_name", "class"]).then((data) => {
     res.send(data)
   })
 })
@@ -90,7 +96,7 @@ router.post('/', (req, res) => {
   console.log(req.body)
   if(req.body) {
     if(checkBodyFields(req.body, ["uuid", "first_name", "last_name", "class", "year"])) {
-      pg.get()("students").insert(req.body).returning("*").then((data) => {
+      pg.get()("users").insert(req.body).returning("*").then((data) => {
         res.status(200).send(data)
       })
       .catch((e) => {

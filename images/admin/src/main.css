@@ -43,6 +43,7 @@ body {
     background-color: white;
     margin: 0.5rem;
     border: 1px solid #000;
+    height:  calc(100vh - 250px);
 }
 .questions {
     width: 100%;

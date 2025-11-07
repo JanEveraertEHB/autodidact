@@ -1,13 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken');
-const { checkBodyFields } =require("./helpers/bodyHelpers");
-const { uuidv4 } =require("./helpers/uuidHelpers");
-const {authCheck} = require("./helpers/authHelpers")
+const { checkBodyFields } =require("./../helpers/bodyHelpers");
+const { uuidv4 } =require("./../helpers/uuidHelpers");
+const {decodeToken} = require("./../helpers/authHelpers")
 
-const pg = require('./db/db.js')
+const pg = require('./../db/db.js')
 
-const { getIO } = require('./socket');
+const { getIO } = require('./../socket');
 
 function broadcastMessage(message) {
   const io = getIO();
@@ -15,8 +15,7 @@ function broadcastMessage(message) {
 }
 
 
-router.post('/request', authCheck, (req, res) => {
-
+router.post('/request', decodeToken, (req, res) => {
   if(req.body && req.user) {
     if(checkBodyFields(req.body, ["request"])) {
       pg.get()("request").insert({ 
@@ -43,31 +42,31 @@ router.post('/request', authCheck, (req, res) => {
       })
     }
     else {
-      res.status(402).send({ "fields": "no"})
+      res.status(403).send({ "fields": "no", message: "missing fields"})
     }
   } else {
     res.status(401).send({"message": "no"})
   }
 })
 
-router.get("/request", authCheck, (req, res) => {
+router.get("/request", decodeToken, (req, res) => {
   const date = new Date();
-const oneHourAgo = new Date(Date.now() - 3600 * 1000);
-  pg.get()('request').select("*")
-  .select('*')
-  .where({student_id: req.user.uuid})
-  .distinctOn('request')
-  .orderBy([{ column: 'request' }, { column: 'created_at', order: 'desc' }])
-  .then((d) => {
-    res.send(d)
-  })
+  const oneHourAgo = new Date(Date.now() - 3600 * 1000);
+    pg.get()('request').select("*")
+    .select('*')
+    .where({student_id: req.user.uuid})
+    .distinctOn('request')
+    .orderBy([{ column: 'request' }, { column: 'created_at', order: 'desc' }])
+    .then((d) => {
+      res.send(d)
+    })
 
 })
 
-router.post('/questions',authCheck, (req, res) => {
+router.post('/questions',decodeToken, (req, res) => {
   if(req.body && req.user) {
-    if(checkBodyFields(req.body, ["question", "uuid"])) {
-
+    if(checkBodyFields(req.body, ["question"])) {
+      req.body.uuid = uuidv4()
 
       pg.get()("questions").insert({ ...req.body, student_id: req.user.uuid}).returning("*").then((data) => {
         pg.logAction("question", JSON.stringify(req.body), req.user.uuid);
@@ -88,14 +87,14 @@ router.post('/questions',authCheck, (req, res) => {
       })
     }
     else {
-      res.status(402).send({ "fields": "no"})
+      res.status(400).send({ "message": "missing fields"})
     }
   } else {
     res.status(401).send({"message": "no"})
   }
 })
 
-router.post('/checkin', authCheck, (req, res) => {
+router.post('/checkin', decodeToken, (req, res) => {
   if(req.body && req.user) {
     if(checkBodyFields(req.body, [ "checkin"])) {
       pg.get()("attendance").insert({ checkin: req.body.checkin, uuid: uuidv4(), student_id: req.user.uuid}).returning("*").then((data) => {
@@ -115,7 +114,7 @@ router.post('/checkin', authCheck, (req, res) => {
   }
 })
 
-router.post('/mic-level',  authCheck, (req, res) => {
+router.post('/mic-level',  decodeToken, (req, res) => {
   if(req.body && req.user) {
     if(checkBodyFields(req.body, [ "level"])) {
       pg.get()("noiselevel").insert({ level: req.body.level, uuid: uuidv4(), student_id: req.user.uuid}).returning("*").then((data) => {

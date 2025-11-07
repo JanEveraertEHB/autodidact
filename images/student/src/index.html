@@ -56,41 +56,7 @@
             </div>
         </div>
     </div>
-
-    <script src="scripts/startup.js" type="module"> </script>
-    <script src="scripts/sendMessage.js"> </script>
-    <script src="scripts/sendCheckin.js"> </script>
-    <script src="scripts/monitorMicrophone.js"> </script>
-    <script src="scripts/monitorMouse.js"> </script>
-    <script src="scripts/actions.js"> </script>
+    <script src="scripts/main.js" type="module"> </script>
 </body>
 </html>
 
-
-<!-- 
-    <div id="recorder">
-        <button id="start">Start</button>
-        <button id="stop">Stop</button>
-        <a id="download" style="display:none">Download</a>
-
-        <script>
-        let mediaRecorder, chunks = []
-
-        document.getElementById('start').onclick = async () => {
-          const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-          mediaRecorder = new MediaRecorder(stream)
-          mediaRecorder.ondataavailable = e => chunks.push(e.data)
-          mediaRecorder.onstop = () => {
-            const blob = new Blob(chunks, { type: 'audio/webm' })
-            const url = URL.createObjectURL(blob)
-            const a = document.getElementById('download')
-            a.href = url
-            a.download = 'recording.webm'
-            a.style.display = 'block'
-          }
-          mediaRecorder.start()
-        }
-
-        document.getElementById('stop').onclick = () => mediaRecorder.stop()
-        </script>
-</div> -->

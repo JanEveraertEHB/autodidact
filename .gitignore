@@ -1,9 +1,9 @@
 _volumes/
 **/.DS_Store
 **/node_modules/
-student/out
-libretranslate/
-ollama/models
-whisper/
-face_recognition/faces
-env
+images/student/out/*
+images/libretranslate/
+images/ollama/
+images/whisper/
+images/face_recognition/faces
+.env

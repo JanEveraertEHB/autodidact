@@ -1,21 +1,22 @@
 const cache = [];
 
 document.addEventListener('DOMContentLoaded', function() {
-    monitorMicLevel(level => {
-        cache.push(level);
-        if (cache.length > 100) cache.shift();
-    });
+    // monitorMicLevel(level => {
+    //     cache.push(level);
+    //     if (cache.length > 100) cache.shift();
+    // });
 
     setInterval(async () => {
         if (cache.length === 0) return;
         const total = cache.reduce((acc, val) => acc + val, 0);
         const average = 100 * (total / cache.length);
-        const c = await window.electronAPI.getCookies();
-        if(c.filter((e) => e.name == "token").length > 0) {
+        const c = getCookie("token");
+        console.log(c)
+        if(c.length > 0) {
             const token = c.filter((e) => e.name == "token")[0].value
             
             if(average > 1.5) {
-    	        fetch('http://206.189.8.155:3000/actions/mic-level', {
+    	        fetch(window.location.hostname + ":3000/actions/mic-level", {
     	            method: 'POST',
     	            headers: { 
     	            	'Content-Type': 'application/json' ,

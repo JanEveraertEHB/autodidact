@@ -15,7 +15,7 @@ const appendMessage = (content) => {
   messages.appendChild(item);
 };
 
-const socket = io("ws://206.189.8.15:3000");
+const socket = io(window.location.protocol + "//"+window.location.hostname+":3000/");
 
 socket.on("connect", () => {
   status.innerText = "Connected";
