@@ -1,4 +1,4 @@
-import { getCookie } from './../helpers/cookieHelpers.js';
+import { setCookie, getCookie } from './../helpers/cookieHelpers.js';
 import { sendWithToken, getWithToken } from './../helpers/APIHelpers.js';
 
 class LoginManager {
@@ -91,7 +91,6 @@ class LoginManager {
       .then(data => {
         if(data.message != "wrong credentials") {
           setCookie({
-            url: window.location.hostname,
             name: 'token',
             value: data.token
           })
