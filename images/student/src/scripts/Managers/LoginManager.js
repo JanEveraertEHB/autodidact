@@ -49,6 +49,7 @@ class LoginManager {
           password: hash,
           class: classgroup
         })
+        
       })
       .then(r => r.json())
       .then(data => {
